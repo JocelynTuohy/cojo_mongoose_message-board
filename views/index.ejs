@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title></title>
+  </head>
+  <body>
+    <h1>The Dojo Message Board</h1>
+    <% for (error of errors){ %>
+      <p><strong><%= error %></strong></p>
+    <% } %>
+    <form action="/postmessage" method="POST">
+      <fieldset>
+        <label for="firstName">Name:</label>
+        <input type="text" name="firstName" id="firstName">
+        <label for="message">Message:</label>
+        <textarea name="message" id="message" cols="30" rows="10"></textarea>
+        <button>Post message</button>
+      </fieldset>
+    </form>
+    <% for (let i = 0; i < messages.length; ++i){ %>
+      <h2>Name: <%= messages[i].firstName %></h2>
+      <h3>Message: <%= messages[i].message %></h2>
+      <% for (let j = 0; j < messages[i]._comments.length; ++j){ %>
+        <h4>Name: <%= messages[i]._comments[j].cfirstName %></h4>
+        <h5>Comment: <%= messages[i]._comments[j].comment %></h5>
+      <% } %>
+      <form action="/postcomment/<%= messages[i]._id %>" method="POST">
+        <fieldset>
+          <label for="cfirstName">Name:</label>
+          <input type="text" name="cfirstName" id="cfirstName">
+          <label for="comment">Comment:</label>
+          <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+          <button>Post comment</button>
+        </fieldset>
+      </form>
+    <% } %>
+  </body>
+</html>
